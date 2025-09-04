@@ -86,9 +86,19 @@ const navbar = document.querySelector(".header");
 const linksNav = document.querySelectorAll(".main-nav__list");
 
 ScrollTrigger.create({
-	trigger: ".section__intro",
+	trigger: [".section__intro"],
 	start: "top top",
 	end: "bottom 10%",
+	toggleClass: {
+		targets: [".header a", ".cursor-dot", ".cursor-outline"],
+		className: "white-mode",
+	},
+});
+
+ScrollTrigger.create({
+	trigger: [".service"],
+	start: "top top",
+	end: "bottom -50%",
 	toggleClass: {
 		targets: [".header a", ".cursor-dot", ".cursor-outline"],
 		className: "white-mode",
