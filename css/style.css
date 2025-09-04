@@ -101,7 +101,11 @@ body {
   text-align: center;
 }
 .section__services {
-  height: 343vh;
+  height: 200vh;
+  padding: 10rem 0;
+}
+.section__works {
+  height: 100vh;
   padding: 10rem 0;
 }
 

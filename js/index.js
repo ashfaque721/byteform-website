@@ -95,25 +95,18 @@ ScrollTrigger.create({
 	},
 });
 
-ScrollTrigger.create({
-	trigger: [".service"],
-	start: "top top",
-	end: "bottom -50%",
-	toggleClass: {
-		targets: [".header a", ".cursor-dot", ".cursor-outline"],
-		className: "white-mode",
-	},
-});
-
 const tl = gsap.timeline({
 	scrollTrigger: {
 		trigger: ".service",
-		pin: true,
-		start: "top top",
-		end: "bottom top",
-		scrub: 1,
-		ease: "linear",
+		start: "top bottom", // start when section enters viewport
+		end: "bottom top", // end when section leaves viewport
+		scrub: 1, // smooth scroll binding
 	},
+});
+
+tl.to(".service", {
+	yPercent: -1, // slowly move up
+	ease: "linear", // keep linear movement
 });
 
 tl.to(".service__item", {
