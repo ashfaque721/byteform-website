@@ -39,13 +39,18 @@
 	}
 
 	&__services {
-		height: 200vh;
+		height: 210vh;
 		padding: 10rem 0;
 	}
 
 	&__works {
-		height: 100vh;
-		padding: 10rem 0;
+		position: relative;
+		height: 250vh;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		overflow: hidden;
+		flex-direction: column;
 	}
 }
 

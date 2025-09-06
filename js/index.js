@@ -73,9 +73,23 @@ window.addEventListener("mousedown", () => {
 		ease: "power1.inOut",
 	});
 });
+window.addEventListener("mousedown", () => {
+	gsap.to(cursorDot, {
+		duration: 0.3,
+		scale: 0.5, // scale up
+		ease: "power1.inOut",
+	});
+});
 
 window.addEventListener("mouseup", () => {
 	gsap.to(cursorOutline, {
+		duration: 0.3,
+		scale: 1, // reset
+		ease: "power1.inOut",
+	});
+});
+window.addEventListener("mouseup", () => {
+	gsap.to(cursorDot, {
 		duration: 0.3,
 		scale: 1, // reset
 		ease: "power1.inOut",
@@ -114,3 +128,28 @@ tl.to(".service__item", {
 	paddingBottom: 0,
 	stagger: 0.5,
 });
+
+let tl_work = gsap.timeline({
+	scrollTrigger: {
+		trigger: ".section__works",
+		start: "top top",
+		end: "bottom bottom",
+		scrub: true,
+		pin: true,
+		invalidateOnRefresh: true,
+	},
+});
+
+// Move the whole grid up
+tl_work.fromTo(
+	".works-grid",
+	{ y: 0 },
+	{ y: "-259rem", ease: "none" } // a bit more than before so last card goes out
+);
+
+// // Fade out the WORKS title after cards finish
+// tl_work.to(
+// 	".work-title-wrapper",
+// 	{ opacity: 0, duration: 1, ease: "power1.out" },
+// 	">-0.2" // start just after grid finishes
+// );
