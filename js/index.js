@@ -129,6 +129,8 @@ tl.to(".service__item", {
 	stagger: 0.5,
 });
 
+// Work Animation
+
 let tl_work = gsap.timeline({
 	scrollTrigger: {
 		trigger: ".section__works",
@@ -136,16 +138,15 @@ let tl_work = gsap.timeline({
 		end: "bottom center",
 		scrub: true,
 		pin: true,
+		pinSpacing: false, // This is the magic line that removes the gap
 		invalidateOnRefresh: true,
 	},
 });
 
-// Move the whole grid up
-tl_work.fromTo(
-	".works-grid",
-	{ y: 0 },
-	{ y: "-450rem", ease: "none" } // a bit more than before so last card goes out
-);
+// Your existing animation stays exactly the same
+tl_work.fromTo(".works-grid", { y: 0 }, { y: "-450rem", ease: "none" });
+
+// Teams Animation
 
 const teams = document.querySelectorAll(".team__wrapper .team");
 const images = document.querySelectorAll(".team__image img");
