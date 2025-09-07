@@ -133,7 +133,7 @@ let tl_work = gsap.timeline({
 	scrollTrigger: {
 		trigger: ".section__works",
 		start: "top top",
-		end: "bottom bottom",
+		end: "bottom center",
 		scrub: true,
 		pin: true,
 		invalidateOnRefresh: true,
@@ -144,12 +144,40 @@ let tl_work = gsap.timeline({
 tl_work.fromTo(
 	".works-grid",
 	{ y: 0 },
-	{ y: "-259rem", ease: "none" } // a bit more than before so last card goes out
+	{ y: "-450rem", ease: "none" } // a bit more than before so last card goes out
 );
 
-// // Fade out the WORKS title after cards finish
-// tl_work.to(
-// 	".work-title-wrapper",
-// 	{ opacity: 0, duration: 1, ease: "power1.out" },
-// 	">-0.2" // start just after grid finishes
-// );
+const teams = document.querySelectorAll(".team__wrapper .team");
+const images = document.querySelectorAll(".team__image img");
+
+// Make the first member active right away
+images[0].classList.add("active");
+teams[0].classList.add("active");
+
+// Pin section and control switching
+ScrollTrigger.create({
+	trigger: ".section__team",
+	start: "top 10%",
+	end: "+=300%", // adjust based on how long you want to scroll
+	pin: true,
+	scrub: true,
+	onUpdate: (self) => {
+		let progress = self.progress; // 0 → 1
+
+		if (progress < 1 / 3) {
+			setActive(0);
+		} else if (progress < 2 / 3) {
+			setActive(1);
+		} else {
+			setActive(2);
+		}
+	},
+});
+
+function setActive(index) {
+	teams.forEach((t) => t.classList.remove("active"));
+	images.forEach((img) => img.classList.remove("active"));
+
+	teams[index].classList.add("active");
+	images[index].classList.add("active");
+}
