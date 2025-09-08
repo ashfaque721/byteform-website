@@ -159,19 +159,18 @@ teams[0].classList.add("active");
 ScrollTrigger.create({
 	trigger: ".section__team",
 	start: "top 10%",
-	end: "+=300%", // adjust based on how long you want to scroll
+	end: "+=300%",
 	pin: true,
 	scrub: true,
+	snap: {
+		snapTo: [0, 0.33, 0.66, 1], // snap points
+		duration: 0.2, // smooth snap
+		delay: 0.05,
+		ease: "power1.inOut",
+	},
 	onUpdate: (self) => {
-		let progress = self.progress; // 0 → 1
-
-		if (progress < 1 / 3) {
-			setActive(0);
-		} else if (progress < 2 / 3) {
-			setActive(1);
-		} else {
-			setActive(2);
-		}
+		let index = Math.floor(self.progress * 3);
+		setActive(index);
 	},
 });
 
