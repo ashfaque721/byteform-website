@@ -56,11 +56,25 @@
 	}
 
 	&__team {
-		height: 100vh;
+		height: 90vh;
 		width: 100%;
 		position: relative;
 		padding: 4rem;
 		margin-top: 70rem;
+	}
+
+	&__testimonials {
+		height: 90vh;
+		width: 100%;
+		position: relative;
+		padding: 4.8rem;
+		margin-top: 7.2rem;
+		overflow: hidden;
+	}
+
+	&__cta {
+		height: 100vh;
+		padding: 4.8rem;
 	}
 }
 
@@ -74,4 +88,20 @@
 		position: absolute;
 		left: 13rem;
 	}
+}
+
+// Footer
+.footer {
+	background-image: radial-gradient(
+		circle at 50% 50%,
+		var(--color-primary),
+		var(--color-primary-dark)
+	);
+	color: white;
+	padding: 6rem 8rem;
+	text-align: center;
+	margin-top: 10rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
 }

@@ -1,5 +1,5 @@
 // Lenis Smooth Scrolling
-gsap.registerPlugin("ScrollTrigger");
+gsap.registerPlugin(ScrollTrigger, SplitText);
 // Initialize Lenis
 const lenis = new Lenis();
 
@@ -99,6 +99,53 @@ window.addEventListener("mouseup", () => {
 const navbar = document.querySelector(".header");
 const linksNav = document.querySelectorAll(".main-nav__list");
 
+document.addEventListener("DOMContentLoaded", () => {
+	document.fonts.ready.then(() => {
+		const headers = document.querySelectorAll(".heading-hero");
+
+		headers.forEach((h1) => {
+			// Split text into lines
+			const split = new SplitText(h1, { type: "lines", linesClass: "line" });
+
+			// Set initial state for each line
+			gsap.set(split.lines, { y: 100, opacity: 0 });
+
+			// Animate each line from bottom on page load
+			gsap.to(split.lines, {
+				y: 0,
+				opacity: 1,
+				stagger: 0.2, // each line animates slightly after the previous
+				duration: 1,
+				ease: "power3.out",
+			});
+		});
+
+		const paragraphs = document.querySelectorAll(".text-anim");
+
+		paragraphs.forEach((p) => {
+			// Split paragraph into words using SplitText
+			const split = new SplitText(p, { type: "words" });
+
+			// Set initial opacity and y offset
+			gsap.set(split.words, { opacity: 0, y: 40 });
+
+			// Animate words on scroll
+			gsap.to(split.words, {
+				opacity: 1,
+				y: 0,
+				stagger: 0.2,
+				duration: 1,
+				scrollTrigger: {
+					trigger: p,
+					start: "top 80%",
+					end: "top 30%",
+					scrub: true,
+				},
+			});
+		});
+	});
+});
+
 ScrollTrigger.create({
 	trigger: [".section__intro"],
 	start: "top top",
@@ -169,7 +216,8 @@ ScrollTrigger.create({
 		ease: "power1.inOut",
 	},
 	onUpdate: (self) => {
-		let index = Math.floor(self.progress * 3);
+		let index = Math.floor(self.progress * teams.length);
+		if (index >= teams.length) index = teams.length - 1;
 		setActive(index);
 	},
 });
@@ -181,3 +229,35 @@ function setActive(index) {
 	teams[index].classList.add("active");
 	images[index].classList.add("active");
 }
+
+// Testimonial Animation
+
+// duplicate cards for seamless infinite scroll
+const track = document.querySelector(".testimonials__track");
+track.innerHTML += track.innerHTML; // duplicate content
+
+// create GSAP tween
+const scrollAnim = gsap.to(".testimonials__track", {
+	xPercent: -50,
+	ease: "linear",
+	repeat: -1,
+	duration: 15,
+});
+
+// pause on hover
+document.querySelectorAll(".testimonial__card").forEach((card) => {
+	card.addEventListener("mouseenter", () => scrollAnim.pause());
+	card.addEventListener("mouseleave", () => scrollAnim.resume());
+});
+
+const footer = document.querySelector(".footer");
+
+footer.addEventListener("mouseenter", () => {
+	cursorDot.classList.add("white-mode");
+	cursorOutline.classList.add("white-mode");
+});
+
+footer.addEventListener("mouseleave", () => {
+	cursorDot.classList.remove("white-mode");
+	cursorOutline.classList.remove("white-mode");
+});
