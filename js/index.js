@@ -11,18 +11,6 @@ function raf(time) {
 
 requestAnimationFrame(raf);
 
-// Synchronize Lenis scrolling with GSAP's ScrollTrigger plugin
-lenis.on("scroll", ScrollTrigger.update);
-
-// Add Lenis's requestAnimationFrame (raf) method to GSAP's ticker
-// This ensures Lenis's smooth scroll animation updates on each GSAP tick
-gsap.ticker.add((time) => {
-	lenis.raf(time * 1000); // Convert time from seconds to milliseconds
-});
-
-// Disable lag smoothing in GSAP to prevent any delay in scroll animations
-gsap.ticker.lagSmoothing(0);
-
 // Cursor
 const cursorDot = document.querySelector("[data-cursor-dot]");
 const cursorOutline = document.querySelector("[data-cursor-outline]");
@@ -138,7 +126,7 @@ document.addEventListener("DOMContentLoaded", () => {
 				scrollTrigger: {
 					trigger: p,
 					start: "top 80%",
-					end: "top 30%",
+					end: "top 50%",
 					scrub: true,
 				},
 			});
@@ -176,22 +164,40 @@ tl.to(".service__item", {
 	stagger: 0.5,
 });
 
-// Work Animation
+const mm = gsap.matchMedia();
 
-let tl_work = gsap.timeline({
-	scrollTrigger: {
-		trigger: ".section__works",
-		start: "top top",
-		end: "bottom center",
-		scrub: true,
-		pin: true,
-		pinSpacing: false, // This is the magic line that removes the gap
-		invalidateOnRefresh: true,
-	},
+mm.add("(max-width: 769px)", () => {
+	tl.to(".service__item", {
+		height: "15rem",
+		paddingBottom: 0,
+		stagger: 0.5,
+	});
 });
 
-// Your existing animation stays exactly the same
-tl_work.fromTo(".works-grid", { y: 0 }, { y: "-450rem", ease: "none" });
+// Work Animation
+
+mm.add("(min-width: 1024px)", () => {
+	// timeline inside media query
+	let tl_work = gsap.timeline({
+		scrollTrigger: {
+			trigger: ".section__works",
+			start: "top top",
+			end: "bottom center",
+			scrub: true,
+			pin: true,
+			pinSpacing: false,
+			invalidateOnRefresh: true,
+		},
+	});
+
+	tl_work.fromTo(".works-grid", { y: 0 }, { y: "-450rem", ease: "none" });
+
+	return () => {
+		// cleanup when breakpoint is left
+		tl_work.kill();
+		ScrollTrigger.refresh();
+	};
+});
 
 // Teams Animation
 
@@ -260,4 +266,36 @@ footer.addEventListener("mouseenter", () => {
 footer.addEventListener("mouseleave", () => {
 	cursorDot.classList.remove("white-mode");
 	cursorOutline.classList.remove("white-mode");
+});
+const hamburger = document.querySelector(".hamburger");
+const nav = document.querySelector(".main-nav");
+const navLinks = document.querySelectorAll(".main-nav__link");
+
+gsap.set(navLinks, { opacity: 0, y: 20 });
+
+const tlNav = gsap.timeline({ paused: true, reversed: true });
+
+tlNav.to(".main-nav", { right: 0, duration: 0.4, ease: "power2.out" }).to(
+	navLinks,
+	{
+		opacity: 1,
+		y: 0,
+		stagger: 0.15,
+		duration: 0.5,
+		ease: "power2.out",
+	},
+	"-=0.2"
+);
+
+hamburger.addEventListener("click", () => {
+	if (window.innerWidth <= 768) {
+		hamburger.classList.toggle("active");
+		if (tlNav.reversed()) {
+			tlNav.play();
+			nav.classList.add("active");
+		} else {
+			tlNav.reverse();
+			nav.classList.remove("active");
+		}
+	}
 });
