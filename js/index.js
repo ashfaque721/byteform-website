@@ -34,6 +34,8 @@ window.addEventListener("mousemove", function (e) {
 	);
 });
 
+const mm = gsap.matchMedia();
+
 const links = document.querySelectorAll("a");
 
 links.forEach((link) => {
@@ -144,36 +146,34 @@ ScrollTrigger.create({
 	},
 });
 
-const tl = gsap.timeline({
-	scrollTrigger: {
-		trigger: ".service",
-		start: "top bottom", // start when section enters viewport
-		end: "bottom top", // end when section leaves viewport
-		scrub: 1, // smooth scroll binding
-	},
-});
+mm.add("(min-width: 770px)", () => {
+	// Create a fresh timeline inside
+	let tl_service = gsap.timeline({
+		scrollTrigger: {
+			trigger: ".service",
+			start: "top bottom",
+			end: "bottom top",
+			scrub: 1,
+		},
+	});
 
-tl.to(".service", {
-	yPercent: -1, // slowly move up
-	ease: "linear", // keep linear movement
-});
+	tl_service.to(".service", {
+		yPercent: -1,
+		ease: "linear",
+	});
 
-tl.to(".service__item", {
-	height: "20rem",
-	paddingBottom: 0,
-	stagger: 0.5,
-});
-
-const mm = gsap.matchMedia();
-
-mm.add("(max-width: 769px)", () => {
-	tl.to(".service__item", {
-		height: "15rem",
+	tl_service.to(".service__item", {
+		height: "20rem",
 		paddingBottom: 0,
 		stagger: 0.5,
 	});
-});
 
+	// Return cleanup function
+	return () => {
+		tl.kill();
+		ScrollTrigger.refresh();
+	};
+});
 // Work Animation
 
 mm.add("(min-width: 1024px)", () => {
@@ -212,7 +212,7 @@ teams[0].classList.add("active");
 ScrollTrigger.create({
 	trigger: ".section__team",
 	start: "top 10%",
-	end: "+=300%",
+	end: "+=90%",
 	pin: true,
 	scrub: true,
 	snap: {
@@ -271,7 +271,9 @@ const hamburger = document.querySelector(".hamburger");
 const nav = document.querySelector(".main-nav");
 const navLinks = document.querySelectorAll(".main-nav__link");
 
-gsap.set(navLinks, { opacity: 0, y: 20 });
+if (window.innerWidth <= 768) {
+	gsap.set(navLinks, { opacity: 0, y: 20 });
+}
 
 const tlNav = gsap.timeline({ paused: true, reversed: true });
 

@@ -706,3 +706,10 @@
 		transform: rotate(-45deg) translateY(-8px);
 	}
 }
+
+@media (max-width: 820px) {
+	.cursor-dot,
+	.cursor-outline {
+		display: none;
+	}
+}

@@ -167,7 +167,11 @@ body {
 	}
 
 	.flex-container {
-		gap: 15rem;
+		gap: 3rem;
+	}
+
+	.team__wrapper {
+		flex: 2;
 	}
 
 	.team__image {
@@ -180,6 +184,7 @@ body {
 	.testimonials-text__container {
 		grid-template-columns: 1fr !important;
 		grid-template-rows: 1fr 1fr;
+		padding: 10rem 16rem !important;
 	}
 
 	.section__testimonials {
@@ -216,5 +221,29 @@ body {
 			font-size: 3rem;
 			margin-bottom: 2rem;
 		}
+	}
+}
+
+@media (max-height: 900px) {
+	.section__works {
+		// margin-top: 10rem !important;
+		padding-top: 150vh !important;
+	}
+}
+
+@media (max-height: 768px) {
+	.section__works {
+		margin: 10rem 0 !important;
+		padding-top: 50vh !important;
+	}
+}
+
+@media (max-width: 560px) {
+	.testimonials-text__container {
+		padding: 10rem 7rem !important;
+	}
+
+	.testimonials__intro {
+		font-size: clamp(1.75rem, 2.5vw, 2.5rem) !important;
 	}
 }
