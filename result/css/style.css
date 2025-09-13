@@ -213,10 +213,6 @@ body {
   z-index: 1000;
 }
 
-.header.white a {
-  color: white;
-}
-
 .section__hero {
   height: auto;
   min-height: 90vh;
@@ -476,30 +472,6 @@ body {
   font-weight: 500;
   pointer-events: none;
   z-index: -1;
-}
-
-.pattern-wrapper {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-}
-
-.hero__pattern-work {
-  position: absolute;
-  width: 20%;
-  height: auto;
-  opacity: 0.2;
-  transform: scale(2.5);
-}
-
-.hero__pattern-top {
-  top: 70%;
-  right: 80%;
-}
-
-.hero__pattern-bottom {
-  top: 70%;
-  right: 6%;
 }
 
 .works-grid {
@@ -935,5 +907,3 @@ body {
     display: none;
   }
 }
-
-/*# sourceMappingURL=style.comp.css.map */
