@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<!-- Your Existing CSS -->
+		<link rel="stylesheet" href="result/css/style.css" />
+
+		<!-- Metadata, Icons, and Fonts from your index.html -->
+		<link rel="icon" type="image/x-icon" href="/img/favicon.png" />
+		<link rel="apple-touch-icon" href="img/apple-touch-icon.png" />
+		<link rel="manifest" href="manifest.webmanifest" />
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap"
+			rel="stylesheet"
+		/>
+		<link
+			rel="stylesheet"
+			href="https://unpkg.com/lenis@1.3.10/dist/lenis.css"
+		/>
+		<meta charset="UTF-8" />
+		<meta
+			name="description"
+			content="Get in touch with Byteform to start your new web project. Contact us for web design, development, and SEO services in Bangladesh."
+		/>
+		<meta
+			name="keywords"
+			content="Contact Byteform, Web Design Contact, Web Development, SEO, Bangladesh, Byteform, Digital Agency"
+		/>
+		<meta name="author" content="ByteForm Inc." />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Contact - ByteForm Inc.</title>
+
+		<!-- Page-Specific Styles -->
+		<style>
+			/* Set main background color */
+			body {
+				background-image: linear-gradient(
+					to right bottom,
+					var(--color-grey-light-1),
+					var(--color-grey-light-4)
+				);
+				background-size: cover;
+				background-repeat: no-repeat;
+			}
+
+			.contact-section {
+				min-height: 90vh; /* Changed from section__hero */
+				padding: 8rem 4.8rem;
+				display: grid;
+				/* UPDATED: Give text flexible space and form a fixed 600px */
+				grid-template-columns: 1fr 600px;
+				/* UPDATED: Removed justify-content: center */
+				align-items: center;
+				gap: 6rem;
+				max-width: 1400px;
+				margin: 0 auto;
+				overflow: hidden; /* Contain animations */
+			}
+
+			.contact-header {
+				padding-bottom: 4rem;
+			}
+
+			.contact-header .heading-hero {
+				/* Override hero heading for a different look */
+				font-size: clamp(4rem, 8vw, 12rem);
+				line-height: 1.1;
+				/* Ensure SplitText lines are hidden for animation */
+				.line {
+					overflow: hidden;
+					padding-bottom: 0.1em; /* Small padding for descenders */
+				}
+			}
+
+			.contact-details {
+				font-size: 2.2rem;
+				list-style: none;
+				padding: 0;
+			}
+
+			.contact-details li {
+				margin-bottom: 2.5rem;
+				/* For animation */
+				opacity: 0;
+				transform: translateY(30px);
+			}
+
+			.contact-details .detail-label {
+				font-weight: 700;
+				color: var(--color-primary);
+				display: block;
+				font-size: 1.6rem;
+				text-transform: uppercase;
+				margin-bottom: 0.5rem;
+			}
+
+			.contact-details a {
+				text-decoration: none;
+				color: var(--color-grey-dark-2);
+				transition: color 0.3s ease;
+			}
+
+			.contact-details a:hover {
+				color: var(--color-primary);
+			}
+
+			/* Animated Form */
+			.contact-form {
+				width: 100%;
+				padding: 4rem;
+				background: #ffffff;
+				border-radius: 12px;
+				box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+			}
+
+			.form-group {
+				position: relative;
+				margin-bottom: 3.5rem;
+			}
+
+			.form-input,
+			.form-textarea {
+				width: 100%;
+				padding: 1rem 0;
+				font-family: "Raleway", sans-serif;
+				font-size: 2rem;
+				color: var(--color-primary-dark);
+				background: transparent;
+				border: none;
+				border-bottom: 2px solid var(--color-grey-light-4);
+				outline: none;
+				transition: border-color 0.3s ease;
+				position: relative;
+				z-index: 1;
+			}
+
+			.form-textarea {
+				min-height: 120px;
+				resize: vertical;
+			}
+
+			.form-input:focus,
+			.form-textarea:focus {
+				border-bottom-color: var(--color-primary);
+			}
+
+			.form-label {
+				position: absolute;
+				top: 1rem;
+				left: 0;
+				font-size: 2rem;
+				color: var(--color-grey-dark-2);
+				transition: all 0.3s ease;
+				pointer-events: none; /* Allows click-through to input */
+				z-index: 0;
+			}
+
+			/* The floating label magic */
+			.form-input:focus + .form-label,
+			.form-input:not(:placeholder-shown) + .form-label,
+			.form-textarea:focus + .form-label,
+			.form-textarea:not(:placeholder-shown) + .form-label {
+				top: -2rem;
+				left: 0;
+				font-size: 1.4rem;
+				font-weight: 700;
+				color: var(--color-primary);
+			}
+
+			/* Button container for magnetic effect */
+			.button-container {
+				display: inline-block;
+				cursor: none; /* Hide default cursor, use our custom one */
+			}
+
+			/* We use btn__primary from style.css but add magnetism */
+			.btn-magnetic {
+				will-change: transform;
+				transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+				border: none;
+				font-size: 2rem; /* Make button text a bit larger */
+			}
+
+			/* Success Message Modal */
+			.success-modal {
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background: rgba(0, 0, 0, 0.5);
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				z-index: 9998;
+				opacity: 0;
+				pointer-events: none;
+				transition: opacity 0.3s ease;
+			}
+
+			.success-modal.visible {
+				opacity: 1;
+				pointer-events: all;
+			}
+
+			.success-modal-content {
+				background: white;
+				padding: 4rem;
+				border-radius: 12px;
+				text-align: center;
+				box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+				transform: scale(0.9);
+				transition: transform 0.3s ease;
+			}
+
+			.success-modal.visible .success-modal-content {
+				transform: scale(1);
+			}
+
+			.success-modal-content h2 {
+				font-size: 2.8rem;
+				color: var(--color-primary-dark);
+				margin-bottom: 1rem;
+			}
+
+			.success-modal-content p {
+				font-size: 1.8rem;
+				color: var(--color-grey-dark-2);
+				margin-bottom: 2.5rem;
+			}
+
+			.modal-close-btn {
+				font-size: 1.6rem;
+				padding: 1rem 3rem;
+			}
+
+			/* ADD THIS FOR THE ERROR MESSAGES */
+			.form-status {
+				font-size: 1.6rem;
+				color: var(--color-grey-dark-2);
+				margin-bottom: 2rem;
+				min-height: 1.8rem; /* Prevents layout jump */
+			}
+
+			/* Responsive */
+			@media (max-width: 900px) {
+				.contact-section {
+					grid-template-columns: 1fr;
+					padding: 4rem 2.4rem;
+				}
+				.contact-header {
+					text-align: center;
+				}
+				.contact-details {
+					text-align: center;
+				}
+				.contact-form {
+					padding: 3rem 2.4rem;
+					max-width: 500px; /* <-- ADD THIS */
+					margin: 0 auto; /* <-- ADD THIS */
+					width: 100%; /* <-- ADD THIS */
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<!-- Cursor (Copied from index.html) -->
+		<div class="cursor-dot" data-cursor-dot></div>
+		<div class="cursor-outline" data-cursor-outline></div>
+
+		<!-- Header (Copied from index.html) -->
+		<header class="header">
+			<a class="nav-logo" href="index.html">
+				<img
+					src="img/logo-sm.png"
+					alt="Byteform logo"
+					loading="eager"
+					class="logo"
+				/>
+				<p class="nav-logo__name">Byteform</p>
+			</a>
+			<div class="hamburger">
+				<span></span>
+				<span></span>
+				<span></span>
+			</div>
+			<nav class="main-nav">
+				<ul class="main-nav__list">
+					<li><a class="main-nav__link" href="index.html#work">Work</a></li>
+					<li><a class="main-nav__link" href="index.html#team">About</a></li>
+					<li>
+						<a class="main-nav__link" href="index.html#contact">Contact</a>
+					</li>
+					<li>
+						<a class="main-nav__link btn__primary" href="index.html#contact"
+							>Let's Start</a
+						>
+					</li>
+				</ul>
+			</nav>
+		</header>
+
+		<main>
+			<section class="contact-section">
+				<!-- Left Column: Title & Details -->
+				<div class="contact-info-wrapper">
+					<div class="contact-header">
+						<h1 class="heading-hero">
+							Stop waiting.<br />
+							Start building.
+						</h1>
+					</div>
+
+					<ul class="contact-details">
+						<li class="contact-detail-item">
+							<span class="detail-label">Email Us</span>
+							<a href="mailto:byteform@gmail.com">byteform@gmail.com</a>
+						</li>
+						<li class="contact-detail-item">
+							<span class="detail-label">Call Us</span>
+							<a href="tel:+8801705147566">+880 1705 147566</a>
+						</li>
+						<li class="contact-detail-item">
+							<span class="detail-label">Location</span>
+							Dhaka, Bangladesh
+						</li>
+					</ul>
+				</div>
+
+				<!-- Right Column: Form -->
+				<form
+					id="contactForm"
+					class="contact-form"
+					method="POST"
+					action="https://formspree.io/f/xkgkwlwj"
+				>
+					<div class="form-group">
+						<input
+							type="text"
+							id="name"
+							name="name"
+							class="form-input"
+							placeholder=" "
+							required
+						/>
+						<label for="name" class="form-label">Full Name</label>
+					</div>
+
+					<div class="form-group">
+						<input
+							type="email"
+							id="email"
+							name="email"
+							class="form-input"
+							placeholder=" "
+							required
+						/>
+						<label for="email" class="form-label">Email Address</label>
+					</div>
+
+					<div class="form-group">
+						<input
+							type="text"
+							id="service"
+							name="service"
+							class="form-input"
+							placeholder=" "
+						/>
+						<label for="service" class="form-label"
+							>What service are you interested in?</label
+						>
+					</div>
+
+					<div class="form-group">
+						<textarea
+							id="message"
+							name="message"
+							class="form-textarea"
+							placeholder=" "
+							required
+						></textarea>
+						<label for="message" class="form-label">Your Message</label>
+					</div>
+
+					<!-- ADD THIS DIV for success/error messages -->
+					<div class="form-status" id="my-form-status"></div>
+
+					<div class="button-container">
+						<button
+							type="submit"
+							class="btn__primary btn-magnetic"
+							id="submitButton"
+						>
+							Send Message
+						</button>
+					</div>
+				</form>
+			</section>
+		</main>
+
+		<!-- Success Modal -->
+		<div class="success-modal" id="successModal">
+			<div class="success-modal-content">
+				<div class="success-modal-text">
+					<h2>Thank You!</h2>
+					<p>Your message has been sent. We'll be in touch soon.</p>
+				</div>
+				<button class="btn__primary modal-close-btn" id="modalCloseBtn">
+					Close
+				</button>
+			</div>
+		</div>
+
+		<!-- Footer (Copied from index.html) -->
+		<footer class="footer">
+			<div class="footer__container">
+				<div class="sticky__area">
+					<div class="sticky__area__2 text-anim">
+						<h1 class="footer__title">Byteform</h1>
+						<div class="footer__grid">
+							<!-- Menu -->
+							<div class="footer__col">
+								<h3>Menu</h3>
+								<ul>
+									<li><a href="index.html">Home</a></li>
+									<li><a href="index.html#work">Works</a></li>
+									<li><a href="index.html#team">About</a></li>
+									<li><a href="index.html#contact">Contact</a></li>
+								</ul>
+							</div>
+
+							<!-- Contact -->
+							<div class="footer__col">
+								<h3>Contact</h3>
+								<ul>
+									<li>ByteForm</li>
+									<li>Dhaka, Bangladesh</li>
+									<li>
+										<a href="mailto:byteform@gmail.com">byteform@gmail.com</a>
+									</li>
+									<li><a href="tel:+8801705147566">+8801705147566</a></li>
+								</ul>
+							</div>
+
+							<!-- Services -->
+							<div class="footer__col">
+								<h3>Services</h3>
+								<ul>
+									<li><a href="#">Web Development</a></li>
+									<li><a href="#">UI/UX Design</a></li>
+									<li><a href="#">SEO</a></li>
+								</ul>
+							</div>
+
+							<!-- Social -->
+							<div class="footer__col">
+								<h3>Social</h3>
+								<ul>
+									<li>
+										<a
+											href="https://www.facebook.com/profile.php?id=61560305254099"
+											target="_blank"
+											>Facebook</a
+										>
+									</li>
+									<li>
+										<a
+											href="https://www.instagram.com/byteformweb"
+											target="_blank"
+											>Instagram</a
+										>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<p class="footer__copy">© 2025 Byteform. All rights reserved.</p>
+					</div>
+				</div>
+			</div>
+		</footer>
+
+		<!-- GSAP and Lenis Scripts (Copied from index.html) -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/SplitText.min.js"></script>
+		<script src="https://unpkg.com/lenis@1.3.10/dist/lenis.min.js"></script>
+
+		<!-- Page-Specific JavaScript -->
+		<script type="module">
+			// 1. Lenis Smooth Scrolling (Copied from index.js)
+			const lenis = new Lenis();
+			function raf(time) {
+				lenis.raf(time);
+				requestAnimationFrame(raf);
+			}
+			requestAnimationFrame(raf);
+
+			// Add smooth scrolling for hash links
+			document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+				anchor.addEventListener("click", function (e) {
+					e.preventDefault();
+					lenis.scrollTo(this.getAttribute("href"));
+				});
+			});
+
+			// 2. Custom Cursor (Copied from index.js)
+			const cursorDot = document.querySelector("[data-cursor-dot]");
+			const cursorOutline = document.querySelector("[data-cursor-outline]");
+
+			window.addEventListener("mousemove", (e) => {
+				const posX = e.clientX;
+				const posY = e.clientY;
+
+				cursorDot.style.left = `${posX}px`;
+				cursorDot.style.top = `${posY}px`;
+
+				cursorOutline.animate(
+					{ left: `${posX}px`, top: `${posY}px` },
+					{ duration: 500, fill: "forwards" }
+				);
+			});
+
+			const links = document.querySelectorAll(
+				"a, button, .form-input, .form-textarea"
+			);
+			links.forEach((link) => {
+				link.addEventListener("mouseenter", () => {
+					gsap.to(cursorOutline, {
+						duration: 0.3,
+						scale: 2,
+						ease: "power1.inOut",
+					});
+				});
+				link.addEventListener("mouseleave", () => {
+					gsap.to(cursorOutline, {
+						duration: 0.3,
+						scale: 1,
+						ease: "power1.inOut",
+					});
+				});
+			});
+
+			window.addEventListener("mousedown", () => {
+				gsap.to(cursorOutline, {
+					duration: 0.3,
+					scale: 2,
+					ease: "power1.inOut",
+				});
+				gsap.to(cursorDot, { duration: 0.3, scale: 0.5, ease: "power1.inOut" });
+			});
+			window.addEventListener("mouseup", () => {
+				gsap.to(cursorOutline, {
+					duration: 0.3,
+					scale: 1,
+					ease: "power1.inOut",
+				});
+				gsap.to(cursorDot, { duration: 0.3, scale: 1, ease: "power1.inOut" });
+			});
+
+			// 3. Mobile Nav (Copied from index.js)
+			const hamburger = document.querySelector(".hamburger");
+			const nav = document.querySelector(".main-nav");
+			const navLinks = document.querySelectorAll(".main-nav__link");
+
+			if (window.innerWidth <= 768) {
+				gsap.set(navLinks, { opacity: 0, y: 20 });
+			}
+
+			const tlNav = gsap.timeline({ paused: true, reversed: true });
+			tlNav.to(".main-nav", { right: 0, duration: 0.4, ease: "power2.out" }).to(
+				navLinks,
+				{
+					opacity: 1,
+					y: 0,
+					stagger: 0.15,
+					duration: 0.5,
+					ease: "power2.out",
+				},
+				"-=0.2"
+			);
+
+			hamburger.addEventListener("click", () => {
+				if (window.innerWidth <= 768) {
+					hamburger.classList.toggle("active");
+					if (tlNav.reversed()) {
+						tlNav.play();
+						nav.classList.add("active");
+					} else {
+						tlNav.reverse();
+						nav.classList.remove("active");
+					}
+				}
+			});
+
+			// 4. NEW: Contact Page Animations
+			gsap.registerPlugin(ScrollTrigger, SplitText);
+
+			// Run all animations after the page is loaded
+			window.addEventListener("load", () => {
+				// Animate the main title
+				const split = new SplitText(".contact-header .heading-hero", {
+					type: "chars, words",
+				});
+
+				gsap.from(split.chars, {
+					duration: 0.8,
+					opacity: 0,
+					y: 80,
+					ease: "power3.out",
+					stagger: 0.03,
+				});
+
+				// Animate the contact details on scroll
+				gsap.from(".contact-detail-item", {
+					duration: 0.8,
+					opacity: 0,
+					y: 30,
+					ease: "power3.out",
+					stagger: 0.2,
+					scrollTrigger: {
+						trigger: ".contact-details",
+						start: "top 85%",
+					},
+				});
+
+				// Magnetic Submit Button
+				const btn = document.getElementById("submitButton");
+				const btnContainer = document.querySelector(".button-container");
+
+				const btnRect = btn.getBoundingClientRect();
+				let btnCenterX = btnRect.left + btnRect.width / 2;
+				let btnCenterY = btnRect.top + btnRect.height / 2;
+
+				const xTo = gsap.quickTo(btn, "x", { duration: 0.6, ease: "power3" });
+				const yTo = gsap.quickTo(btn, "y", { duration: 0.6, ease: "power3" });
+
+				btnContainer.addEventListener("mousemove", (e) => {
+					const { clientX, clientY } = e;
+
+					// Recalculate center on move (in case of scroll)
+					const rect = btn.getBoundingClientRect();
+					btnCenterX = rect.left + rect.width / 2;
+					btnCenterY = rect.top + rect.height / 2;
+
+					const moveX = (clientX - btnCenterX) * 0.4;
+					const moveY = (clientY - btnCenterY) * 0.4;
+
+					xTo(moveX);
+					yTo(moveY);
+
+					gsap.to(cursorOutline, { scale: 2.5, duration: 0.3 });
+				});
+
+				// --- ADDED THIS MISSING MOUSELEAVE EVENT ---
+				btnContainer.addEventListener("mouseleave", () => {
+					xTo(0);
+					yTo(0);
+					gsap.to(cursorOutline, { scale: 1, duration: 0.3 });
+				});
+				// --- END OF ADDED CODE ---
+			}); // <-- --- ADDED THIS MISSING CLOSING BRACKET ---
+
+			// 5. NEW: Form Handling (REPLACED)
+			const form = document.getElementById("contactForm");
+			const modal = document.getElementById("successModal");
+			const status = document.getElementById("my-form-status");
+			const modalCloseBtn = document.getElementById("modalCloseBtn");
+
+			async function handleSubmit(event) {
+				event.preventDefault();
+				const data = new FormData(event.target);
+
+				// Show a "sending" message
+				status.innerHTML = "Sending...";
+				status.style.color = "var(--color-grey-dark-2)";
+
+				fetch(event.target.action, {
+					method: form.method,
+					body: data,
+					headers: {
+						Accept: "application/json",
+					},
+				})
+					.then((response) => {
+						if (response.ok) {
+							// SUCCESS: Show the modal
+							status.innerHTML = ""; // Clear status
+							modal.classList.add("visible");
+							lenis.stop(); // Stop scrolling
+							form.reset();
+
+							// Reset floating labels manually
+							document.querySelectorAll(".form-label").forEach((label) => {
+								label.style.top = "";
+								label.style.fontSize = "";
+								label.style.color = "";
+							});
+						} else {
+							// FORM ERROR: Show error from Formspree
+							response.json().then((data) => {
+								if (Object.hasOwn(data, "errors")) {
+									status.innerHTML = data["errors"]
+										.map((error) => error["message"])
+										.join(", ");
+								} else {
+									status.innerHTML =
+										"Oops! There was a problem submitting your form";
+								}
+								status.style.color = "red";
+							});
+						}
+					})
+					.catch((error) => {
+						// NETWORK ERROR: Show generic error
+						status.innerHTML = "Oops! There was a problem submitting your form";
+						status.style.color = "red";
+					});
+			}
+
+			// Attach the submit listener
+			form.addEventListener("submit", handleSubmit);
+
+			// Attach the close modal listener
+			modalCloseBtn.addEventListener("click", () => {
+				modal.classList.remove("visible");
+				form.reset(); // Clear the form fields
+				lenis.start(); // Re-enable scrolling
+
+				// Reset floating labels
+				document.querySelectorAll(".form-label").forEach((label) => {
+					label.style.top = "1rem";
+					label.style.fontSize = "2rem";
+					label.style.color = "var(--color-grey-dark-2)";
+				});
+			});
+		</script>
+	</body>
+</html>
