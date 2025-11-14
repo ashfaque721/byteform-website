@@ -90,7 +90,7 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 100svh;
+    min-height: 100vh;
   }
   .section__services {
     padding: 0;
@@ -160,7 +160,6 @@ body {
   .section__works {
     height: auto !important;
     padding: 10rem !important;
-    margin-top: 30rem !important;
   }
   .flex-container {
     flex-direction: column;
@@ -710,6 +709,7 @@ body {
     min-height: auto; /* Let content define height */
     height: auto;
     padding: 4.8rem 2.4rem;
+    margin-top: 10rem;
   }
 }
 
