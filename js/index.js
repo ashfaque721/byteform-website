@@ -152,37 +152,46 @@ mm.add("(min-width: 1024px)", () => {
 });
 
 // Teams Animation
-const teams = document.querySelectorAll(".team__wrapper .team");
-const images = document.querySelectorAll(".team__image img");
+mm.add("(min-width: 68.76em)", () => {
+	// Desktop-only animation
+	const teams = document.querySelectorAll(".team__wrapper .team");
+	const images = document.querySelectorAll(".team__image img");
 
-images[0].classList.add("active");
-teams[0].classList.add("active");
+	images[0].classList.add("active");
+	teams[0].classList.add("active");
 
-ScrollTrigger.create({
-	trigger: ".section__team",
-	start: "top 10%",
-	end: "+=90%",
-	pin: true,
-	scrub: true,
-	snap: {
-		snapTo: [0, 0.33, 0.66, 1],
-		duration: 0.2,
-		delay: 0.05,
-		ease: "power1.inOut",
-	},
-	onUpdate: (self) => {
-		let index = Math.floor(self.progress * teams.length);
-		if (index >= teams.length) index = teams.length - 1;
-		setActive(index);
-	},
-});
+	const teamTrigger = ScrollTrigger.create({
+		trigger: ".section__team",
+		start: "top 10%",
+		end: "+=90%",
+		pin: true,
+		scrub: true,
+		snap: {
+			snapTo: [0, 0.33, 0.66, 1],
+			duration: 0.2,
+			delay: 0.05,
+			ease: "power1.inOut",
+		},
+		onUpdate: (self) => {
+			let index = Math.floor(self.progress * teams.length);
+			if (index >= teams.length) index = teams.length - 1;
+			setActive(index);
+		},
+	});
 
-function setActive(index) {
-	teams.forEach((t) => t.classList.remove("active"));
-	images.forEach((img) => img.classList.remove("active"));
-	teams[index].classList.add("active");
-	images[index].classList.add("active");
-}
+	function setActive(index) {
+		teams.forEach((t) => t.classList.remove("active"));
+		images.forEach((img) => img.classList.remove("active"));
+		teams[index].classList.add("active");
+		images[index].classList.add("active");
+	}
+
+	/* ADD THIS CLEANUP FUNCTION */
+	return () => {
+		teamTrigger.kill();
+		ScrollTrigger.refresh();
+	};
+}); /* END THE WRAPPER */
 
 // Testimonials Animation
 const track = document.querySelector(".testimonials__track");

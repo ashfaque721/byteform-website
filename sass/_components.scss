@@ -166,6 +166,14 @@
 		overflow: hidden;
 		justify-content: space-between;
 		padding: 4.8rem;
+
+		@media only screen and (max-width: $bp-md) {
+			flex-direction: column;
+			align-items: center;
+			padding: 4.8rem 2.4rem;
+			text-align: center;
+		}
+
 		&--1 {
 			background-color: #6666b3;
 			color: white;
@@ -196,11 +204,19 @@
 		font-size: clamp(1px, 2vw, 2.9rem);
 		font-weight: 300;
 		padding-bottom: 2.5rem;
+
+		@media only screen and (max-width: $bp-md) {
+			max-width: 90vw;
+		}
 	}
 
 	&__img__container {
 		flex-shrink: 0; /* prevent image from shrinking */
 		padding: 5rem;
+
+		@media only screen and (max-width: $bp-md) {
+			padding: 3rem 0;
+		}
 	}
 
 	&__img {
@@ -209,6 +225,16 @@
 		height: auto;
 		border-radius: 20px;
 		box-shadow: 10px solid var(--color-primary-dark);
+
+		@media only screen and (max-width: $bp-lg) {
+			width: 100%;
+			max-width: 50rem; /* Prevents image from being huge on tablet */
+		}
+
+		@media only screen and (max-width: $bp-sm) {
+			width: 90vw; /* 90% of the screen width */
+			max-width: 40rem; /* 320px cap on mobile */
+		}
 	}
 
 	&__text {
@@ -362,18 +388,32 @@
 }
 
 ////////////////////////////////
-
 .section__team {
 	padding: 4.8rem;
 	min-height: 100vh;
 	color: black;
 	overflow-x: hidden;
 	box-sizing: border-box;
+
+	/* Mobile & Tablet Overrides */
+	@media (max-width: $bp-lg) {
+		min-height: auto; /* Let content define height */
+		height: auto;
+		padding: 4.8rem 2.4rem;
+	}
 }
+
 .flex-container {
 	display: flex;
 	align-items: stretch;
 	justify-content: center;
+
+	/* Mobile & Tablet Overrides */
+	@media (max-width: $bp-lg) {
+		flex-direction: column; /* Stack names and images */
+		align-items: center;
+		gap: 0;
+	}
 }
 
 .heading-team {
@@ -381,14 +421,69 @@
 	font-size: clamp(2rem, 8vw, 6rem);
 	font-weight: 200;
 	border-bottom: 1px solid var(--color-primary-light);
+
+	/* Mobile & Tablet Overrides */
+	@media (max-width: $bp-lg) {
+		display: block; /* Make it a block element */
+		text-align: center; /* Center the heading text */
+		border-bottom: none; /* Remove border */
+		margin-bottom: 2rem; /* Add some space below */
+	}
 }
 
 .team__wrapper {
 	flex: 1;
+
+	/* Mobile & Tablet Overrides */
+	@media (max-width: $bp-lg) {
+		flex: none; /* Do not grow or shrink */
+		width: 100%;
+		max-width: 50rem; /* Stop it from being too wide */
+		display: flex;
+		flex-direction: column;
+		gap: 2.5rem; /* Space between each person */
+	}
 }
 
 .team {
 	margin: 2rem 0;
+
+	/* Mobile & Tablet Overrides: Avatar Layout */
+	@media (max-width: $bp-lg) {
+		margin: 0; /* Reset margin */
+		display: flex; /* This is the key */
+		align-items: center;
+		gap: 1.5rem; /* Space between avatar and text */
+
+		/* Use pseudo-elements for the avatar */
+		&::before {
+			content: "";
+			display: block;
+			flex-shrink: 0;
+			width: 6rem; /* 60px avatar */
+			height: 6rem; /* 60px avatar */
+			border-radius: 50%;
+			background-size: cover;
+			background-position: center;
+			/* Fallback gradient */
+			background-image: linear-gradient(
+				to bottom right,
+				var(--color-primary-light),
+				var(--color-primary-dark)
+			);
+		}
+
+		/* Assign the correct image to each avatar */
+		&.team__1::before {
+			background-image: url("../img/team/eshan.webp");
+		}
+		&.team__2::before {
+			background-image: url("../img/team/ajlan.webp");
+		}
+		&.team__3::before {
+			background-image: url("../img/team/siam.webp");
+		}
+	}
 }
 
 .team__name {
@@ -398,6 +493,15 @@
 	transition: 0.3s ease;
 	text-transform: uppercase;
 	font-weight: 300;
+
+	/* Mobile & Tablet Overrides */
+	@media (max-width: $bp-lg) {
+		opacity: 1; /* Make all names visible */
+		font-size: 2rem; /* Smaller, cleaner font for mobile */
+		font-weight: 700;
+		color: var(--color-primary-dark);
+		line-height: 1.2;
+	}
 }
 
 .team__designation {
@@ -405,24 +509,44 @@
 	margin: 0.5rem 0 0;
 	opacity: 0.3;
 	transition: 0.3s ease;
+
+	/* Mobile & Tablet Overrides */
+	@media (max-width: $bp-lg) {
+		opacity: 1; /* Make all designations visible */
+		font-size: 1.5rem; /* Smaller font */
+		color: var(--color-grey-dark-2);
+		margin: 0.25rem 0 0;
+	}
 }
 
+/* This rule is for the DESKTOP active state */
 .team.active .team__name,
 .team.active .team__designation {
 	opacity: 1;
 	color: var(--color-primary-dark);
 	transform: translateX(10px);
 	font-weight: 700;
+
+	/* Mobile & Tablet Overrides */
+	@media (max-width: $bp-lg) {
+		transform: none; /* Reset on mobile */
+	}
 }
 
+/* This is the DESKTOP image container */
 .team__image {
-	// align-items: flex-end;
 	justify-content: flex-end;
 	position: relative;
 	flex: 1;
 	display: flex;
+
+	/* Mobile & Tablet Overrides */
+	@media (max-width: $bp-lg) {
+		display: none; /* Hide the big image container on mobile */
+	}
 }
 
+/* These are the DESKTOP images */
 .team__image img {
 	padding: 0.5rem;
 	max-width: 100%;
@@ -440,6 +564,7 @@
 	);
 }
 
+/* This is the DESKTOP active image */
 .team__image img.active {
 	opacity: 1;
 	transform: scale(1);

@@ -143,13 +143,32 @@ body {
 		width: 100% !important; /* full width instead of 70vw */
 		row-gap: 5rem !important; /* smaller gaps */
 		padding: 0 1rem; /* add padding to avoid touching edges */
+		margin: 0 auto;
 	}
 
 	.card {
 		width: 100%; /* cards take full width */
 		max-width: 500px; /* prevent them from stretching too wide */
 	}
-	
+
+	.card-image {
+		padding: 0; /* Remove padding around the image */
+	}
+	.card-image img {
+		outline: none; /* Remove the heavy outline on mobile */
+	}
+	.card-footer {
+		flex-direction: column; /* Stack the title and link */
+		gap: 1.2rem;
+		padding: 1.5rem;
+	}
+	/* (Optional) Adjust font sizes */
+	.card-footer h3 {
+		font-size: 1.7rem;
+	}
+	.card-footer a {
+		font-size: 1.5rem;
+	}
 }
 
 @media (max-width: 1024px) {
@@ -166,8 +185,8 @@ body {
 			"d"
 			"e"
 			"f" !important;
-		width: 70vw !important;
 		row-gap: 10rem !important;
+		margin: 0 auto;
 	}
 
 	.section__services {
@@ -182,16 +201,50 @@ body {
 	}
 
 	.flex-container {
-		gap: 3rem;
-	}
-
-	.team__wrapper {
-		flex: 2;
-	}
-
-	.team__image {
+		flex-direction: column;
 		align-items: center;
-		justify-content: center;
+	}
+
+	/* 2. Center the text block */
+	.team__wrapper {
+		flex: none; /* Allow it to shrink */
+		text-align: center;
+		width: 100%;
+	}
+
+	/* 3. Make all names/designations fully visible */
+	.team__name,
+	.team__designation {
+		opacity: 1; /* Override the default faded opacity */
+	}
+
+	/* 4. Remove the "active" sideways transform */
+	.team.active .team__name,
+	.team.active .team__designation {
+		transform: none; /* Removes the translateX(10px) */
+	}
+
+	/* 5. Prepare the image container to stack its children */
+	.team__image {
+		flex: none; /* Allow it to shrink */
+		width: 100%;
+		max-width: 40rem; /* 400px max, looks good on mobile */
+		height: auto; /* Let height be automatic based on images */
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 2rem; /* Space between stacked images */
+		justify-content: center; /* Override desktop's 'flex-end' */
+	}
+
+	/* 6. Force ALL images to be visible and stacked */
+	.team__image img {
+		position: relative !important; /* Override 'absolute' */
+		opacity: 1 !important; /* Override '0' */
+		transform: none !important; /* Override 'scale(0.95)' */
+		z-index: 1;
+		width: 100%; /* Make image fill the container */
+		height: auto; /* Maintain aspect ratio */
 	}
 }
 
