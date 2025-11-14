@@ -90,6 +90,7 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    min-height: 100svh;
   }
   .section__services {
     padding: 0;
@@ -116,10 +117,29 @@ body {
     width: 100% !important; /* full width instead of 70vw */
     row-gap: 5rem !important; /* smaller gaps */
     padding: 0 1rem; /* add padding to avoid touching edges */
+    margin: 0 auto;
   }
   .card {
     width: 100%; /* cards take full width */
     max-width: 500px; /* prevent them from stretching too wide */
+  }
+  .card-image {
+    padding: 0; /* Remove padding around the image */
+  }
+  .card-image img {
+    outline: none; /* Remove the heavy outline on mobile */
+  }
+  .card-footer {
+    flex-direction: column; /* Stack the title and link */
+    gap: 1.2rem;
+    padding: 1.5rem;
+  }
+  /* (Optional) Adjust font sizes */
+  .card-footer h3 {
+    font-size: 1.7rem;
+  }
+  .card-footer a {
+    font-size: 1.5rem;
   }
 }
 @media (max-width: 1024px) {
@@ -130,8 +150,8 @@ body {
   }
   .works-grid {
     grid-template-areas: "a" "b" "c" "d" "e" "f" !important;
-    width: 70vw !important;
     row-gap: 10rem !important;
+    margin: 0 auto;
   }
   .section__services {
     height: auto !important;
@@ -143,14 +163,45 @@ body {
     margin-top: 30rem !important;
   }
   .flex-container {
-    gap: 3rem;
-  }
-  .team__wrapper {
-    flex: 2;
-  }
-  .team__image {
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
+  }
+  /* 2. Center the text block */
+  .team__wrapper {
+    flex: none; /* Allow it to shrink */
+    text-align: center;
+    width: 100%;
+  }
+  /* 3. Make all names/designations fully visible */
+  .team__name,
+  .team__designation {
+    opacity: 1; /* Override the default faded opacity */
+  }
+  /* 4. Remove the "active" sideways transform */
+  .team.active .team__name,
+  .team.active .team__designation {
+    transform: none; /* Removes the translateX(10px) */
+  }
+  /* 5. Prepare the image container to stack its children */
+  .team__image {
+    flex: none; /* Allow it to shrink */
+    width: 100%;
+    max-width: 40rem; /* 400px max, looks good on mobile */
+    height: auto; /* Let height be automatic based on images */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem; /* Space between stacked images */
+    justify-content: center; /* Override desktop's 'flex-end' */
+  }
+  /* 6. Force ALL images to be visible and stacked */
+  .team__image img {
+    position: relative !important; /* Override 'absolute' */
+    opacity: 1 !important; /* Override '0' */
+    transform: none !important; /* Override 'scale(0.95)' */
+    z-index: 1;
+    width: 100%; /* Make image fill the container */
+    height: auto; /* Maintain aspect ratio */
   }
 }
 @media (max-width: 768px) {
@@ -211,6 +262,13 @@ body {
   position: sticky;
   top: 0;
   z-index: 1000;
+}
+@media (max-width: 680px) {
+  .header {
+    position: absolute; /* Change from sticky to absolute */
+    width: 100%; /* Ensure it spans the full width */
+    padding: 3rem 2.4rem; /* Reduce the large padding */
+  }
 }
 
 .header.white a {
@@ -429,6 +487,14 @@ body {
   justify-content: space-between;
   padding: 4.8rem;
 }
+@media only screen and (max-width: 56.25em) {
+  .service__item {
+    flex-direction: column;
+    align-items: center;
+    padding: 4.8rem 2.4rem;
+    text-align: center;
+  }
+}
 .service__item--1 {
   background-color: #6666b3;
   color: white;
@@ -455,9 +521,19 @@ body {
   font-weight: 300;
   padding-bottom: 2.5rem;
 }
+@media only screen and (max-width: 56.25em) {
+  .service__description {
+    max-width: 90vw;
+  }
+}
 .service__img__container {
   flex-shrink: 0; /* prevent image from shrinking */
   padding: 5rem;
+}
+@media only screen and (max-width: 56.25em) {
+  .service__img__container {
+    padding: 3rem 0;
+  }
 }
 .service__img {
   display: block; /* removes inline gaps */
@@ -465,6 +541,18 @@ body {
   height: auto;
   border-radius: 20px;
   box-shadow: 10px solid var(--color-primary-dark);
+}
+@media only screen and (max-width: 68.75em) {
+  .service__img {
+    width: 100%;
+    max-width: 50rem; /* Prevents image from being huge on tablet */
+  }
+}
+@media only screen and (max-width: 37.5em) {
+  .service__img {
+    width: 90vw; /* 90% of the screen width */
+    max-width: 40rem; /* 320px cap on mobile */
+  }
 }
 .service__text {
   display: flex;
@@ -615,12 +703,28 @@ body {
   color: black;
   overflow-x: hidden;
   box-sizing: border-box;
+  /* Mobile & Tablet Overrides */
+}
+@media (max-width: 68.75em) {
+  .section__team {
+    min-height: auto; /* Let content define height */
+    height: auto;
+    padding: 4.8rem 2.4rem;
+  }
 }
 
 .flex-container {
   display: flex;
   align-items: stretch;
   justify-content: center;
+  /* Mobile & Tablet Overrides */
+}
+@media (max-width: 68.75em) {
+  .flex-container {
+    flex-direction: column; /* Stack names and images */
+    align-items: center;
+    gap: 0;
+  }
 }
 
 .heading-team {
@@ -628,14 +732,66 @@ body {
   font-size: clamp(2rem, 8vw, 6rem);
   font-weight: 200;
   border-bottom: 1px solid var(--color-primary-light);
+  /* Mobile & Tablet Overrides */
+}
+@media (max-width: 68.75em) {
+  .heading-team {
+    display: block; /* Make it a block element */
+    text-align: center; /* Center the heading text */
+    border-bottom: none; /* Remove border */
+    margin-bottom: 2rem; /* Add some space below */
+  }
 }
 
 .team__wrapper {
   flex: 1;
+  /* Mobile & Tablet Overrides */
+}
+@media (max-width: 68.75em) {
+  .team__wrapper {
+    flex: none; /* Do not grow or shrink */
+    width: 100%;
+    max-width: 50rem; /* Stop it from being too wide */
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem; /* Space between each person */
+  }
 }
 
 .team {
   margin: 2rem 0;
+  /* Mobile & Tablet Overrides: Avatar Layout */
+}
+@media (max-width: 68.75em) {
+  .team {
+    margin: 0; /* Reset margin */
+    display: flex; /* This is the key */
+    align-items: center;
+    gap: 1.5rem; /* Space between avatar and text */
+    /* Use pseudo-elements for the avatar */
+    /* Assign the correct image to each avatar */
+  }
+  .team::before {
+    content: "";
+    display: block;
+    flex-shrink: 0;
+    width: 6rem; /* 60px avatar */
+    height: 6rem; /* 60px avatar */
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    /* Fallback gradient */
+    background-image: linear-gradient(to bottom right, var(--color-primary-light), var(--color-primary-dark));
+  }
+  .team.team__1::before {
+    background-image: url("../img/team/eshan.webp");
+  }
+  .team.team__2::before {
+    background-image: url("../img/team/ajlan.webp");
+  }
+  .team.team__3::before {
+    background-image: url("../img/team/siam.webp");
+  }
 }
 
 .team__name {
@@ -645,6 +801,16 @@ body {
   transition: 0.3s ease;
   text-transform: uppercase;
   font-weight: 300;
+  /* Mobile & Tablet Overrides */
+}
+@media (max-width: 68.75em) {
+  .team__name {
+    opacity: 1; /* Make all names visible */
+    font-size: 2rem; /* Smaller, cleaner font for mobile */
+    font-weight: 700;
+    color: var(--color-primary-dark);
+    line-height: 1.2;
+  }
 }
 
 .team__designation {
@@ -652,23 +818,48 @@ body {
   margin: 0.5rem 0 0;
   opacity: 0.3;
   transition: 0.3s ease;
+  /* Mobile & Tablet Overrides */
+}
+@media (max-width: 68.75em) {
+  .team__designation {
+    opacity: 1; /* Make all designations visible */
+    font-size: 1.5rem; /* Smaller font */
+    color: var(--color-grey-dark-2);
+    margin: 0.25rem 0 0;
+  }
 }
 
+/* This rule is for the DESKTOP active state */
 .team.active .team__name,
 .team.active .team__designation {
   opacity: 1;
   color: var(--color-primary-dark);
   transform: translateX(10px);
   font-weight: 700;
+  /* Mobile & Tablet Overrides */
+}
+@media (max-width: 68.75em) {
+  .team.active .team__name,
+  .team.active .team__designation {
+    transform: none; /* Reset on mobile */
+  }
 }
 
+/* This is the DESKTOP image container */
 .team__image {
   justify-content: flex-end;
   position: relative;
   flex: 1;
   display: flex;
+  /* Mobile & Tablet Overrides */
+}
+@media (max-width: 68.75em) {
+  .team__image {
+    display: none; /* Hide the big image container on mobile */
+  }
 }
 
+/* These are the DESKTOP images */
 .team__image img {
   padding: 0.5rem;
   max-width: 100%;
@@ -682,6 +873,7 @@ body {
   background-image: linear-gradient(to bottom right, var(--color-primary-light), var(--color-primary-dark));
 }
 
+/* This is the DESKTOP active image */
 .team__image img.active {
   opacity: 1;
   transform: scale(1);

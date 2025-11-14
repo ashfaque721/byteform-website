@@ -8,6 +8,12 @@
 	position: sticky;
 	top: 0;
 	z-index: 1000;
+
+	@media (max-width: 680px) {
+		position: absolute; /* Change from sticky to absolute */
+		width: 100%; /* Ensure it spans the full width */
+		padding: 3rem 2.4rem; /* Reduce the large padding */
+	}
 }
 
 .header.white a {
