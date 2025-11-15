@@ -765,13 +765,16 @@ body {
 @media (max-width: 68.75em) {
   .team {
     margin: 0; /* Reset margin */
-    display: flex; /* This is the key */
+    display: grid; /* CHANGED to grid */
+    grid-template-columns: 6rem 1fr; /* 6rem for avatar, 1fr for text */
+    grid-template-rows: auto auto; /* Two rows for text */
     align-items: center;
-    gap: 1.5rem; /* Space between avatar and text */
+    gap: 0 1.5rem; /* 0 row gap, 1.5rem column gap */
     /* Use pseudo-elements for the avatar */
     /* Assign the correct image to each avatar */
   }
   .team::before {
+    grid-row: 1/span 2; /* Make avatar span both rows */
     content: "";
     display: block;
     flex-shrink: 0;
@@ -805,8 +808,11 @@ body {
 }
 @media (max-width: 68.75em) {
   .team__name {
-    opacity: 1; /* Make all names visible */
-    font-size: 2rem; /* Smaller, cleaner font for mobile */
+    grid-column: 2/3; /* Place in second column */
+    grid-row: 1/2; /* Place in first row */
+    align-self: end; /* Align to bottom of its grid cell */
+    opacity: 1;
+    font-size: 2rem;
     font-weight: 700;
     color: var(--color-primary-dark);
     line-height: 1.2;
@@ -822,10 +828,14 @@ body {
 }
 @media (max-width: 68.75em) {
   .team__designation {
-    opacity: 1; /* Make all designations visible */
-    font-size: 1.5rem; /* Smaller font */
+    grid-column: 2/3; /* Place in second column */
+    grid-row: 2/3; /* Place in second row */
+    align-self: start; /* Align to top of its grid cell */
+    opacity: 1;
+    font-size: 1.5rem;
     color: var(--color-grey-dark-2);
-    margin: 0.25rem 0 0;
+    margin: 0; /* Reset margin */
+    font-weight: 300; /* As requested for "thin" font weight */
   }
 }
 

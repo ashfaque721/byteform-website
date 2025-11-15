@@ -247,19 +247,25 @@
 			@media (max-width: 900px) {
 				.contact-section {
 					grid-template-columns: 1fr;
-					padding: 4rem 2.4rem;
+					padding: 12rem 2.4rem 4rem; /* This keeps it below the header */
+					justify-content: center;
+					min-height: 100vh;
+					box-sizing: border-box;
+					gap: 0; /* <-- REDUCED gap from 6rem */
 				}
 				.contact-header {
 					text-align: center;
+					padding-bottom: 2rem;
 				}
+				/* The other rules for .contact-details and .contact-form can stay as they are */
 				.contact-details {
 					text-align: center;
 				}
 				.contact-form {
 					padding: 3rem 2.4rem;
-					max-width: 500px; /* <-- ADD THIS */
-					margin: 0 auto; /* <-- ADD THIS */
-					width: 100%; /* <-- ADD THIS */
+					max-width: 500px;
+					margin: 0 auto;
+					width: 100%;
 				}
 			}
 		</style>
